@@ -1,10 +1,13 @@
 # Format Btns #
 
 This plugin, is made for use moodle 4.2 and top. Its was development, why **format_buttons** is not compatible for
-moodle 4.2 and top. This plugin was not intended as a replacement for **format_buttons**: _althought this was follow its filosofy minimalist_.
+moodle 4.2 and top. This plugin was not intended as a replacement for **format_buttons**: _althought this was follow its
+filosofy minimalist_.
 
-The purpose of this plugin is got content of the courses in moodle (sections and modules) with buttons, in a esay navigation.
+The purpose of this plugin is got content of the courses in moodle (sections and modules) with buttons, in a esay
+navigation.
 
+[Repository in GitHub: https://github.com/jrangelardila/moodle-format_btns ] (https://github.com/jrangelardila/moodle-format_btns)
 
 ## Installing via uploaded ZIP file ##
 
