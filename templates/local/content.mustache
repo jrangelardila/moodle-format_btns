@@ -1,0 +1,57 @@
+{{!
+  Include the core content template.
+  This is the top template for a course.
+}}
+{{< core_courseformat/local/content }}
+{{!
+    Add any general structure blocks override here.
+}}
+
+{{! Mandatory the content/section block. }}
+    {{$ core_courseformat/local/content/section }}
+        {{^section}}
+            {{#all_sections}}
+                {{#body}}
+                    {{#selected}}
+                        <a href="{{{url}}}" style="display: inline-flex; align-items: center; justify-content: center;
+                                width: 50px; height: 50px; border-radius: 50%; background-color: {{bgcolor_selected}}; margin:5px;
+                                text-decoration: none; color: {{fontcolor_selected}};"
+                           class="btn btn-primary font-weight-bold {{disabled}} border-0">
+                        <span style="text-align: center;
+                        line-height: 100px; font-size: 23px;">{{namesection}}</span>
+                        </a>
+                    {{/selected}}
+                    {{^selected}}
+                        <a href="{{{url}}}" style="display: inline-flex; align-items: center; justify-content: center;
+                                width: 50px; height: 50px; border-radius: 50%; background-color: {{bgcolor}}; margin:5px;
+                                text-decoration: none; color: {{colorfont}};"
+                           class="btn btn-primary font-weight-bold {{disabled}} border-0">
+                        <span style="text-align: center;
+                        line-height: 100px; font-size: 23px;">{{namesection}}</span>
+                        </a>
+                    {{/selected}}
+                {{/body}}
+            {{/all_sections}}
+        {{/section}}
+        {{> format_btns/local/content/section }}
+
+
+        <div class="section_addition">
+            {{{ addsectioncontrol }}}
+        </div>
+
+    {{/ core_courseformat/local/content/section }}
+{{/ core_courseformat/local/content }}
+
+{{#sectionselector}}
+    {{$ core_courseformat/local/content/sectionselector }}
+        {{> core_courseformat/local/content/sectionselector }}
+    {{/ core_courseformat/local/content/sectionselector }}
+{{/sectionselector}}
+
+{{#bulkedittools}}
+    {{$ core_courseformat/local/content/bulkedittools}}
+    {{/ core_courseformat/local/content/bulkedittools}}
+
+    <a href="{{{url_add_section}}}" class="btn btn-primary">Add section</a>
+{{/bulkedittools}}
