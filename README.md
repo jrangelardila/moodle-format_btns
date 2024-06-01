@@ -7,7 +7,7 @@ filosofy minimalist_.
 The purpose of this plugin is got content of the courses in moodle (sections and modules) with buttons, in a esay
 navigation.
 
-[Repository in GitHub: https://github.com/jrangelardila/moodle-format_btns ] (https://github.com/jrangelardila/moodle-format_btns)
+Repository in GitHub: https://github.com/jrangelardila/moodle-format_btns 
 
 ## Installing via uploaded ZIP file ##
 
