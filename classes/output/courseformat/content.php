@@ -19,7 +19,7 @@
  *
  * @package     format_btns
  * @category    upgrade
- * @copyright   2023 Jhon Rangel <jrangel@sanmateo.edu.co>
+ * @copyright   2023 Jhon Rangel <jrangelardila@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,9 +35,10 @@ class content extends content_base
     var $currentsection;
 
     /**
+     * Nombre de la plantilla
+     *
      * @param \renderer_base $renderer
      * @return string
-     * Nombre de la plantilla
      */
     public function get_template_name(\renderer_base $renderer): string
     {
@@ -45,12 +46,13 @@ class content extends content_base
     }
 
     /**
+     * Retornar la plantilla
+     *
      * @param \renderer_base $output
      * @return \stdClass
      * @throws \coding_exception
      * @throws \dml_exception
      * @throws \moodle_exception
-     * Retornar la plantilla
      */
     public function export_for_template(\renderer_base $output): \stdClass
     {
@@ -157,11 +159,12 @@ class content extends content_base
     }
 
     /**
+     * Exportar las secciones, de acuerdo a la necesidad
+     *
      * @param \renderer_base $output
      * @return array
      * @throws \coding_exception
      * @throws \moodle_exception
-     * Exportar las secciones, de acuerdo a la necesidad
      */
     public function export_sections(\renderer_base $output): array
     {
@@ -237,11 +240,12 @@ class content extends content_base
     }
 
     /**
+     * Retornar los parametros de la url
+     *
      * @param $params_need
      * @return mixed
      * @throws \coding_exception
      * @throws \moodle_exception
-     * Retornar los parametros de la url
      */
     static function get_param_for_url($params_need)
     {
@@ -265,9 +269,10 @@ class content extends content_base
     }
 
     /**
+     * Reescribiendo la función
+     *
      * @param course_modinfo $modinfo
      * @return array|\core_courseformat\output\local\section_info[]
-     * Reescribiendo la función
      */
     private function get_sections_to_display(\course_modinfo $modinfo): array
     {
@@ -283,19 +288,19 @@ class content extends content_base
     }
 
     /**
+     * Retornar las secciones, cuando se seleecione la opción de letras mayusculas
+     *
      * @param array $array_sections
      * @return array
-     * Retornar las secciones, cuando se seleecione la opción de letras mayusculas
      */
     private function leter_lowercase(array $array_sections)
     {
-        $abecedario = range('a', 'z');
         $count = 0;
+
         foreach ($array_sections as $array_section) {
+            if (empty($array_section->namesection)) continue;
 
-            if ($array_section->namesection == 0) continue;
-
-            $array_section->namesection = $abecedario[$count];
+            $array_section->namesection = $this->convert_lowercase_letter($count, 'a');
             $count++;
         }
 
@@ -303,91 +308,95 @@ class content extends content_base
     }
 
     /**
+     * Retornar letras en minuscula, segun se requiera
+     *
+     * @param $num
+     * @param $baseChar
+     * @return string
+     */
+    private function convert_lowercase_letter($num, $baseChar)
+    {
+        $letters = '';
+
+        do {
+            $letters = chr(($num % 26) + ord($baseChar)) . $letters;
+            $num = intval($num / 26) - 1;
+        } while ($num >= 0);
+
+        return $letters;
+    }
+
+
+    /**
+     * Retornar las secciones, cuando se seleecione la opción de letras mayusculas
+     *
      * @param array $array_sections
      * @return array
-     * Retornar las secciones, cuando se seleecione la opción de letras mayusculas
      */
     private function leter_uppercase(array $array_sections)
     {
-        $abecedario = range('A', 'Z');
         $count = 0;
+
         foreach ($array_sections as $array_section) {
+            if (empty($array_section->namesection)) continue;
 
-            if ($array_section->namesection == 0) continue;
-
-            $array_section->namesection = $abecedario[$count];
+            $array_section->namesection = $this->convert_uppercase_letter($count);
             $count++;
         }
 
         return $array_sections;
     }
 
+    /**
+     * Convertir el parametro a letra segun se requiera
+     *
+     * @param $num
+     * @return string
+     */
+    private function convert_uppercase_letter($num)
+    {
+        $letters = '';
+
+        do {
+            $letters = chr($num % 26 + 65) . $letters;
+            $num = intval($num / 26) - 1;
+        } while ($num >= 0);
+
+        return $letters;
+    }
+
 
     /**
-     * @return string[]
      * Array con los números romanos
+     *
+     * @return string[]
      */
     private function get_numbers_in_roman()
     {
         $romannumbers = array(
-            1 => 'I',
-            2 => 'II',
-            3 => 'III',
-            4 => 'IV',
-            5 => 'V',
-            6 => 'VI',
-            7 => 'VII',
-            8 => 'VIII',
-            9 => 'IX',
-            10 => 'X',
-            11 => 'XI',
-            12 => 'XII',
-            13 => 'XIII',
-            14 => 'XIV',
-            15 => 'XV',
-            16 => 'XVI',
-            17 => 'XVII',
-            18 => 'XVIII',
-            19 => 'XIX',
-            20 => 'XX',
-            21 => 'XXI',
-            22 => 'XXII',
-            23 => 'XXIII',
-            24 => 'XXIV',
-            25 => 'XXV',
-            26 => 'XXVI',
-            27 => 'XXVII',
-            28 => 'XXVIII',
-            29 => 'XXIX',
-            30 => 'XXX',
-            31 => 'XXXI',
-            32 => 'XXXII',
-            33 => 'XXXIII',
-            34 => 'XXXIV',
-            35 => 'XXXV',
-            36 => 'XXXVI',
-            37 => 'XXXVII',
-            38 => 'XXXVIII',
-            39 => 'XXXIX',
-            40 => 'XL',
-            41 => 'XLI',
-            42 => 'XLII',
-            43 => 'XLIII',
-            44 => 'XLIV',
-            45 => 'XLV',
-            46 => 'XLVI',
-            47 => 'XLVII',
-            48 => 'XLVIII',
-            49 => 'XLIX',
-            50 => 'L'
+            1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V', 6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
+            20 => 'XX', 30 => 'XXX', 40 => 'XL', 50 => 'L', 60 => 'LX', 70 => 'LXX', 80 => 'LXXX', 90 => 'XC', 100 => 'C'
         );
+
+        for ($i = 11; $i <= 19; $i++) {
+            $romannumbers[$i] = 'X' . $romannumbers[$i % 10];
+        }
+
+        for ($i = 21; $i <= 99; $i++) {
+            if ($i % 10 === 0) {
+                $romannumbers[$i] = $romannumbers[$i - $i % 10];
+            } else {
+                $romannumbers[$i] = $romannumbers[$i - $i % 10] . $romannumbers[$i % 10];
+            }
+        }
         return $romannumbers;
     }
 
     /**
+     * Retornar cuando se indique la opción de números romanos
+     *
      * @param array $array_sections
      * @return array
-     * Retornar cuando se indique la opción de números romanos
      */
     private function roman_numbers(array $array_sections)
     {
@@ -405,11 +414,12 @@ class content extends content_base
     }
 
     /**
+     * Retornar la imagen
+     *
      * @param $filearea
      * @param $file_name
      * @return string
      * @throws \dml_exception
-     * Retornar la imagen
      */
     public function get_content_file($filearea, $file_name)
     {

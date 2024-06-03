@@ -19,7 +19,7 @@
  *
  * @package     format_btns
  * @category    upgrade
- * @copyright   2023 Jhon Rangel <jrangel@sanmateo.edu.co>
+ * @copyright   2023 Jhon Rangel <jrangelardila@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

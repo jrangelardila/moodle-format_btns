@@ -16,11 +16,11 @@
 use core\output\inplace_editable;
 
 /**
- * Plugin functions for the format_btns plugin.
+ * Plugin version and other meta-data are defined here.
  *
- * @package   format_btns
- * @copyright Year, You Name <your@email.address>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     format_btns
+ * @copyright   2023 Jhon Rangel <jrangelardila@gmail.com>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_btns extends core_courseformat\base
 {
@@ -41,11 +41,21 @@ class format_btns extends core_courseformat\base
     }
 
 
+    /**
+     * Retornar si se usa identación
+     *
+     * @return bool
+     */
     public function uses_indentation(): bool
     {
         return true;
     }
 
+    /**
+     * Retornar si usa index
+     *
+     * @return true
+     */
     public function uses_course_index()
     {
         return true;
@@ -66,6 +76,11 @@ class format_btns extends core_courseformat\base
         return $ajaxsupport;
     }
 
+    /**
+     * Retornar el uso de components
+     *
+     * @return true
+     */
     public function supports_components()
     {
         return true;
@@ -117,11 +132,12 @@ class format_btns extends core_courseformat\base
     }
 
     /**
+     * Opciones personalizadas del curso
+     *
      * @param $foreditform
      * @return array
      * @throws coding_exception
      * @throws dml_exception
-     * Opciones personalizadas del curso
      */
     public function course_format_options($foreditform = false)
     {
@@ -181,10 +197,11 @@ class format_btns extends core_courseformat\base
     }
 
     /**
+     * Eliminar sección
+     *
      * @param $section
      * @param $forcedeleteifnotempty
      * @return bool
-     * Eliminar sección
      */
     public function delete_section($section, $forcedeleteifnotempty = false)
     {
@@ -192,8 +209,9 @@ class format_btns extends core_courseformat\base
     }
 
     /**
-     * @return array[]
      * Bloques para ubicar
+     *
+     * @return array[]
      */
     public function get_default_blocks()
     {
@@ -204,10 +222,11 @@ class format_btns extends core_courseformat\base
     }
 
     /**
+     * Permitir actividades sigilosas
+     *
      * @param $cm
      * @param $section
      * @return true
-     * Permitir actividades sigilosas
      */
     public function allow_stealth_module_visibility($cm, $section)
     {

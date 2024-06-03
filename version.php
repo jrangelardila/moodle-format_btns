@@ -18,14 +18,14 @@
  * Plugin version and other meta-data are defined here.
  *
  * @package     format_btns
- * @copyright   2023 Jhon Rangel <jrangel@sanmateo.edu.co>
+ * @copyright   2023 Jhon Rangel <jrangelardila@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'format_btns';
-$plugin->release = '0.1.0';
-$plugin->version = 2024052809;
-$plugin->requires = 2021051700;
-$plugin->maturity = MATURITY_ALPHA;
+$plugin->release = '1.0';
+$plugin->version = 2024060300;
+$plugin->requires = 2023042400;
+$plugin->maturity = MATURITY_STABLE;
