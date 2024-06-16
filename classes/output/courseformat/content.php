@@ -259,7 +259,7 @@ class content extends content_base
         $params = $current_url->params();
 
         foreach ($params_need as $param => $value) {
-            $param_value = optional_param($param, null, PARAM_RAW);
+            $param_value = optional_param($param, null, PARAM_INT);
             if ($param_value !== null) {
                 $params_need[$param] = $param_value;
             } else {
