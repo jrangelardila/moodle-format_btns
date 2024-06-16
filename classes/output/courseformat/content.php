@@ -61,7 +61,7 @@ class content extends content_base
         $course = $format->get_course();
 
         $array_sections = array();
-        $all_sections = $DB->get_records('course_sections', array('course' => $course->id));
+        $all_sections = $DB->get_records('course_sections', array('course' => $course->id), "section");
         foreach ($all_sections as $section) {
             $info = new \stdClass();
             if ($section->section != 0) {
@@ -111,12 +111,13 @@ class content extends content_base
             array('expandsection' => null,
                 'section' => null,
             ));
-        if ($section_select['expandsection'] == 0 or $section_select['expandsection'] == "")
-            $section_select['expandsection'] = null;
-        if ($section_select['expandsection'] != null) {
+        if ($section_select['expandsection'] != "" & $section_select['expandsection'] != "0") {
             $array_sections[$section_select['expandsection']]->selected = true;
         }
 
+        if ($section_select['section'] != "" && $section_select['section'] != "0") {
+            $array_sections[$section_select['section']]->selected = true;
+        }
         $data = (object)[
             'title' => $format->page_title(),
             'sections' => $sections,
@@ -186,10 +187,12 @@ class content extends content_base
             array('expandsection' => null,
                 'section' => null,
             ));
-        if ($section_select['expandsection'] == 0 or $section_select['expandsection'] == 1
-            or $section_select['expandsection'] == "")
-            $section_select['expandsection'] = null;
 
+        foreach ($section_select as $section) {
+            if ($section != "" && $section != "0") {
+                $section_select['expandsection'] = $section;
+            }
+        }
 
         $this->currentsection = $section_select['expandsection'] != null ? $section_select['expandsection'] : 1;
 
@@ -249,20 +252,19 @@ class content extends content_base
      */
     static function get_param_for_url($params_need)
     {
-        global $CFG;
+        global $FULLME;
 
-        $current_url = new moodle_url($CFG->wwwroot . $_SERVER['REQUEST_URI']);
+        $current_url = new moodle_url($FULLME);
 
         $params = $current_url->params();
 
         foreach ($params_need as $param => $value) {
-            if (isset($_GET[$param])) {
-                $params_need['expandsection'] = $_GET[$param];
-
-                return $params_need;
+            $param_value = optional_param($param, null, PARAM_RAW);
+            if ($param_value !== null) {
+                $params_need[$param] = $param_value;
             } else {
                 $value = isset($params[$param]) ? $params[$param] : '';
-                $params_need['expandsection'] = $value;
+                $params_need[$param] = $value;
             }
         }
         return $params_need;

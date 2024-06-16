@@ -60,3 +60,4 @@ $string['fontcolor_selected'] = 'Font color for selected button';
 $string['fontcolor_selected_desc'] = 'Font color for the selected button';
 $string['selectd_file'] = 'Image for sections';
 $string['selectd_file_desc'] = 'Image for the start of the sections, at the top';
+$string['privacy:metadata'] = 'The format course btns plugin does not store any personal data.';

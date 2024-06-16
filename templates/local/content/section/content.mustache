@@ -1,0 +1,35 @@
+<div id="coursecontentcollapse{{num}}"
+     class="content {{^iscoursedisplaymultipage}}
+         {{^sitehome}}course-content-item-content collapse {{^contentcollapsed}}show{{/contentcollapsed}}{{/sitehome}}
+     {{/iscoursedisplaymultipage}}">
+    <div>
+        {{#summary}}
+            {{$ core_courseformat/local/content/section/summary }}
+                {{> core_courseformat/local/content/section/summary }}
+            {{/ core_courseformat/local/content/section/summary }}
+        {{/summary}}
+        {{#availability}}
+            {{$ format_onetopic/courseformat/content/cm/availabilityinline }}
+                {{> format_onetopic/courseformat/content/cm/availabilityinline }}
+            {{/ format_onetopic/courseformat/content/cm/availabilityinline }}
+        {{/availability}}
+    </div>
+    {{#cmsummary}}
+        {{$ core_courseformat/local/content/section/cmsummary }}
+            {{> core_courseformat/local/content/section/cmsummary }}
+        {{/ core_courseformat/local/content/section/cmsummary }}
+    {{/cmsummary}}
+    {{#cmlist}}
+        {{$ core_courseformat/local/content/section/cmlist }}
+            {{> core_courseformat/local/content/section/cmlist }}
+        {{/ core_courseformat/local/content/section/cmlist }}
+    {{/cmlist}}
+    {{{cmcontrols}}}
+    {{#insertafter}}
+        {{#numsections}}
+            {{$ core_courseformat/local/content/addsection}}
+                {{> core_courseformat/local/content/addsection}}
+            {{/ core_courseformat/local/content/addsection}}
+        {{/numsections}}
+    {{/insertafter}}
+</div>
