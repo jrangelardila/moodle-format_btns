@@ -15,7 +15,7 @@
                     {{#selected}}
                         <a href="{{{url}}}" class="btn btn-primary font-weight-bold {{disabled}} border-0"
                            style="display: inline-flex; align-items: center; justify-content: center; min-width: 50px;
-                                   min-height: 50px; border-radius: 50%; background-color: {{bgcolor_selected}}; margin: 5px;
+                                   min-height: 50px; border-radius: {{{form_btn}}}; background-color: {{bgcolor_selected}}; margin: 5px;
                                    font-size: 1.5em; text-decoration: none; color: {{fontcolor_selected}};">
                             {{namesection}}
                         </a>
@@ -23,7 +23,7 @@
                     {{^selected}}
                         <a href="{{{url}}}" class="btn btn-primary font-weight-bold {{disabled}} border-0"
                            style="display: inline-flex; align-items: center; justify-content: center; min-width: 50px;
-                                   min-height: 50px; border-radius: 50%; background-color: {{bgcolor}}; margin: 5px;
+                                   min-height: 50px; border-radius: {{{form_btn}}}; background-color: {{bgcolor}}; margin: 5px;
                                    font-size: 1.5em; text-decoration: none; color: {{colorfont}};">
                             {{namesection}}
                         </a>

@@ -101,6 +101,15 @@ class content extends content_base
                 break;
         }
 
+        switch ($course->selectform) {
+            case 'rounded':
+                $form_btn = "50%";
+                break;
+            default:
+                $form_btn = "0%";
+                break;
+        }
+
         $course->bgcolor = $course->bgcolor != "" ? $course->bgcolor : get_config('format_btns', 'bgcolor');
         $course->colorfont = $course->colorfont != "" ? $course->colorfont : get_config('format_btns', 'fontcolor');
         $course->bgcolor_selected = $course->bgcolor_selected != "" ? $course->bgcolor_selected : get_config('format_btns', 'bgcolor_selected');
@@ -128,6 +137,7 @@ class content extends content_base
             'colorfont' => $course->colorfont,
             'bgcolor_selected' => $course->bgcolor_selected,
             'fontcolor_selected' => $course->fontcolor_selected,
+            'form_btn' => $form_btn,
         ];
 
         if ($format->show_editor()) {

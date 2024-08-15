@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'format_btns';
-$plugin->release = '1.0';
-$plugin->version = 2024061600;
+$plugin->release = '1.4';
+$plugin->version = 2024081500;
 $plugin->requires = 2023042400;
 $plugin->maturity = MATURITY_STABLE;

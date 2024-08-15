@@ -192,6 +192,34 @@ class format_btns extends core_courseformat\base
             )
         );
 
+        $courseformatoptionsedit['selectform'] = array(
+            'label' => get_string('selectformbtn', 'format_btns'),
+            'help' => 'selectform',
+            'help_component' => 'format_btns',
+            'element_type' => 'select',
+            'default' => 'rounded',
+            'element_attributes' => array(
+                array(
+                    'square' => get_string('square', 'format_btns'),
+                    'rounded' => get_string('rounded', 'format_btns'),
+                )
+            )
+        );
+
+        $courseformatoptionsedit['title_section_view'] = array(
+            'label' => get_string('title_section_view', 'format_btns'),
+            'help' => 'title_section_view',
+            'help_component' => 'format_btns',
+            'element_type' => 'select',
+            'default' => '0',
+            'element_attributes' => array(
+                array(
+                    '0' => get_string('no'),
+                    '1' => get_string('yes'),
+                )
+            )
+        );
+
 
         return $courseformatoptionsedit;
     }
