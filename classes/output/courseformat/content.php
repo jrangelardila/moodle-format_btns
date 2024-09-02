@@ -25,6 +25,7 @@
 
 namespace format_btns\output\courseformat;
 
+use cache;
 use context_system;
 use core_courseformat\output\local\content as content_base;
 use course_modinfo;
@@ -61,7 +62,9 @@ class content extends content_base
         $course = $format->get_course();
 
         $array_sections = array();
+
         $all_sections = $DB->get_records('course_sections', array('course' => $course->id), "section");
+        $section_prev = self::get_last_section_access($course->id);
         foreach ($all_sections as $section) {
             $info = new \stdClass();
             if ($section->section != 0) {
@@ -79,6 +82,28 @@ class content extends content_base
             $array_sections[] = $info;
         }
 
+        $section_select = self::get_param_for_url(
+            ['expandsection' => null,
+                'section' => null,
+            ]);
+        if ($section_select['expandsection'] != "" & $section_select['expandsection'] != "0") {
+            $array_sections[$section_select['expandsection']]->selected = true;
+            self::save_last_section_access($course->id, $section_select['expandsection']);
+        } else {
+            if ($section_prev) {
+                $array_sections[$section_prev]->selected = true;
+            }
+        }
+
+        if ($section_select['section'] != "" && $section_select['section'] != "0") {
+            $array_sections[$section_select['section']]->selected = true;
+            self::save_last_section_access($course->id, $section_select['section']);
+        } else {
+            $section = self::get_last_section_access($course->id);
+            if ($section) {
+                $array_sections[$section]->selected = true;
+            }
+        }
 
         $sections = $this->export_sections($output);
         $sections[0]->section = 1;
@@ -115,18 +140,6 @@ class content extends content_base
         $course->bgcolor_selected = $course->bgcolor_selected != "" ? $course->bgcolor_selected : get_config('format_btns', 'bgcolor_selected');
         $course->fontcolor_selected = $course->fontcolor_selected != "" ? $course->fontcolor_selected : get_config('format_btns', 'fontcolor_selected');;
 
-
-        $section_select = self::get_param_for_url(
-            array('expandsection' => null,
-                'section' => null,
-            ));
-        if ($section_select['expandsection'] != "" & $section_select['expandsection'] != "0") {
-            $array_sections[$section_select['expandsection']]->selected = true;
-        }
-
-        if ($section_select['section'] != "" && $section_select['section'] != "0") {
-            $array_sections[$section_select['section']]->selected = true;
-        }
         $data = (object)[
             'title' => $format->page_title(),
             'sections' => $sections,
@@ -204,7 +217,17 @@ class content extends content_base
             }
         }
 
-        $this->currentsection = $section_select['expandsection'] != null ? $section_select['expandsection'] : 1;
+        if (!$section_select['expandsection']) {
+            $last = self::get_last_section_access($course->id);
+            if ($last) {
+                $this->currentsection = $last;
+                $section_select['expandsection'] = $last;
+            } else {
+                $this->currentsection = 1;
+            }
+        } else {
+            $this->currentsection = $section_select['expandsection'];
+        }
 
         foreach ($this->get_sections_to_display($modinfo) as $thissection) {
             // The course/view.php check the section existence but the output can be called
@@ -281,10 +304,38 @@ class content extends content_base
     }
 
     /**
+     * Guardar la ultima sección a que se accedio
+     * @param $courseid
+     * @param $section
+     * @return void
+     */
+    static function save_last_section_access($courseid, $section)
+    {
+        global $USER;
+        $cache = cache::make('format_btns', 'user_last_section');
+        $cache->set($USER->id . '_' . $courseid, $section);
+    }
+
+    /**
+     * Retornar la ultima sección del usuario
+     * @param $courseid
+     * @return array|bool|float|int|mixed|\stdClass|string
+     * @throws \coding_exception
+     */
+    static function get_last_section_access($courseid)
+    {
+        global $USER;
+
+        $cache = cache::make('format_btns', 'user_last_section');
+        return $cache->get($USER->id . '_' . $courseid);
+    }
+
+    /**
      * Reescribiendo la función
      *
      * @param course_modinfo $modinfo
      * @return array|\core_courseformat\output\local\section_info[]
+     * @throws \moodle_exception
      */
     private function get_sections_to_display(\course_modinfo $modinfo): array
     {
