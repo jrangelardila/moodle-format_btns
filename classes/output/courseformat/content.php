@@ -87,20 +87,30 @@ class content extends content_base
                 'section' => null,
             ]);
         if ($section_select['expandsection'] != "" & $section_select['expandsection'] != "0") {
-            $array_sections[$section_select['expandsection']]->selected = true;
-            self::save_last_section_access($course->id, $section_select['expandsection']);
+            if (isset($array_sections[$section_select['expandsection']])) {
+                $array_sections[$section_select['expandsection']]->selected = true;
+                self::save_last_section_access($course->id, $section_select['expandsection']);
+            }
         } else {
-            if ($section_prev) {
+            if ($section_prev && isset($array_sections[$section_prev])) {
                 $array_sections[$section_prev]->selected = true;
             }
         }
 
+        if (sizeof($all_sections) - 1 < ($section_select['expandsection'])) {
+            $url = new moodle_url("/course/view.php", array('id' => $course->id));
+            self::save_last_section_access($course->id, null);
+            redirect($url);
+        }
+
         if ($section_select['section'] != "" && $section_select['section'] != "0") {
-            $array_sections[$section_select['section']]->selected = true;
+            if ($section_prev && isset($array_sections[$section_prev])) {
+                $array_sections[$section_select['section']]->selected = true;
+            }
             self::save_last_section_access($course->id, $section_select['section']);
         } else {
             $section = self::get_last_section_access($course->id);
-            if ($section) {
+            if ($section && isset($array_sections[$section])) {
                 $array_sections[$section]->selected = true;
             }
         }
